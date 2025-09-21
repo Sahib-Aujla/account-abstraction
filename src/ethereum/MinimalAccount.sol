@@ -11,6 +11,7 @@ import {IEntryPoint} from "lib/account-abstraction/contracts/interfaces/IEntryPo
 
 contract MinimalAccount is IAccount, Ownable {
     error MinimalAccount__NotFromEntryPoint();
+    error MinimalAccount__NotFromEntryPointOrOwner();
 
     IEntryPoint public immutable entryPoint;
 
@@ -21,6 +22,13 @@ contract MinimalAccount is IAccount, Ownable {
     modifier requireFromEntryPoint() {
         if (msg.sender != address(entryPoint)) {
             revert MinimalAccount__NotFromEntryPoint();
+        }
+        _;
+    }
+
+     modifier requireFromEntryPointOrOwner() {
+        if (msg.sender != address(entryPoint) && msg.sender != owner()) {
+            revert MinimalAccount__NotFromEntryPointOrOwner();
         }
         _;
     }
