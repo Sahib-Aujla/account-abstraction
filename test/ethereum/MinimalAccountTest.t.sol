@@ -25,7 +25,7 @@ contract MinimalAccountTest is Test,ZkSyncChainChecker {
 
     uint256 constant AMOUNT = 1e18;
 
-    function setUp() external {
+    function setUp() external skipZkSync{
         deployMinimal = new DeployMinimal();
 
         (helperConfig, minimalAccount) = deployMinimal.deployMinimalAccount();
